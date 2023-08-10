@@ -1,5 +1,4 @@
-# project-boy
-proyecto piloto gestion de stock
+# Proyecto piloto gestion de stock
 =======
 # FrontendAngular
 
