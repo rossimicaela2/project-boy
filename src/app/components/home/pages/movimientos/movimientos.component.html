@@ -1,0 +1,48 @@
+<div style="margin: 20px; width: 990px">
+    <h2 class="title">Listado de auditorias generadas</h2>
+    <span style="margin-top: 10px;"></span>
+    <div>
+
+        <div style="margin: 20px; width: 100%;">
+            <mat-form-field>
+                <mat-label>Búsqueda</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+            </mat-form-field>
+            <span style="margin-top: 10px;"></span>
+            <h3 class="title">Auditorias</h3>
+            <span style="margin-top: 10px;"></span>
+            <div class="mat-elevation-z8" >
+                <table mat-table [dataSource]="dataSource"  class="mat-elevation-z8" matSort style="width: 100%;">
+
+                    <!-- Columnas -->
+                    <ng-container *ngFor="let column of displayedColumns">
+                        <ng-container matColumnDef="{{ column }}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: #E8EAF6;"> {{ column === 'url' ? '' :
+                            column | uppercase }} </th>
+                            <td mat-cell *matCellDef="let row">
+                                <ng-container *ngIf="column !== 'url'">{{ row[column] }}</ng-container>
+                                <ng-container *ngIf="column === 'url'">
+                                    <a href="#" (click)="downloadFile(row, $event)">Descargar</a>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- Definición de filas y encabezados -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                    <!-- Fila mostrada cuando no hay datos coincidentes -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                            No se encontraron resultados con el filtro de búsqueda: "{{ input.value }}"
+                        </td>
+                    </tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                    itemsPerPageLabel="Cantidad a mostrar"></mat-paginator>
+
+            </div>
+            
+        </div>

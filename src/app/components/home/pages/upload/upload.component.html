@@ -1,0 +1,115 @@
+<div style="margin: 20px;">
+    <h2 class="title">Subir archivos</h2>
+    <span style="margin-top: 10px;"></span>
+    <div>
+        <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls">
+        <span style="margin-left: 10px;"></span>
+        <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!file">Procesar Archivo</button>
+    </div>
+    <span style="margin: 10px;"></span>
+</div>
+
+<div *ngIf="showMessage" class="info-message">
+    Por favor, complete todos los campos.
+</div>
+<div *ngIf="showSuccessMessage" class="success-message">
+    El envío se realizó con éxito.
+</div>
+<div *ngIf="showErrorMessage" class="info-message">
+    Ocurrió un error. Intenteló mas tarde.
+</div>
+
+<div style="margin: 20px; height: 450px; overflow-y: auto;">
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8"
+        *ngIf="dataSource.length > 0">
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef style="background-color: #E8EAF6;">
+                <div class="checkbox-header">
+                    <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                </div>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation(); updateSelectedItems()"
+                    (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cliente">
+            <th mat-header-cell *matHeaderCellDef style="background-color: #E8EAF6;">Cliente</th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field>
+                    <input #inputField type="text" placeholder="" aria-label="Number" matInput [(ngModel)]="element.cliente" 
+                        [matAutocomplete]="auto" (click)="$event.stopPropagation();"
+                        style="background: white; font-size: 12px;" (focus)="onInputBlur(); ">
+                    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+                        <mat-option class="auto-option" *ngFor="let option of filteredOptions | async" [value]="option"
+                            style="font-size: 10px;">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <!-- Resto de las columnas -->
+        <ng-container *ngFor="let column of columnsToDisplay">
+            <ng-container *ngIf="column !== 'cliente'"  [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef style="background-color: #E8EAF6;"> {{column}} </th>
+                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+            </ng-container>
+        </ng-container>
+
+        <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions" style="background-color: #E8EAF6;">&nbsp;
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="expand row"
+                    (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                <div class="example-element-detail"
+                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                    <div>
+                        <div *ngFor="let prop of getObjectKeys(element)">
+                            <ng-container *ngIf="prop !== 'cliente'">
+                                 <b>{{ prop }}:</b> {{ element[prop] }}
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <!-- Define la fila de encabezado -->
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand; sticky: true"></tr>
+
+        <!-- Define la fila de datos -->
+        <tr mat-row *matRowDef="let element; columns: rowColumns;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+
+        <!-- Define la fila de detalles expandidos -->
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"
+            (click)="selection.toggle(row)"></tr>
+
+
+    </table>
+</div>
+
+<button style="margin-left:20px" mat-raised-button color="primary" [disabled]="selection.isEmpty()"
+    (click)="sendSelection()" *ngIf="dataSource.length > 0">
+    Enviar selección
+</button>

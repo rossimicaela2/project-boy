@@ -1,0 +1,19 @@
+<div class="overlay" *ngIf="loading">
+    <div class="spinner"></div>
+</div>
+<div style="margin: 20px;">
+    <h2 class="title">Cargar socios</h2>
+    <span style="margin-top: 10px;"></span> 
+    <div>
+        <input type="file" (change)="onFileCLientChange($event)" accept=".xlsx, .xls">
+        <span style="margin-left: 10px;"></span>
+        <button mat-raised-button color="primary" (click)="cargarClientes()" [disabled]="!fileClient">Cargar
+            Clientes</button>
+    <span style="margin: 10px;"></span> 
+</div>
+<div *ngIf="showMessage" class="info-message">
+    Ocurrió un error en la carga.
+</div>
+<div *ngIf="showMessageSuccess" class="info-message-success">
+    El archivo se cargó correctamente.
+</div>

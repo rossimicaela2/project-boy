@@ -1,0 +1,43 @@
+<mat-toolbar color="primary">Sistema ingreso de archivos</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav class="mat-elevation-z8 custom-sidenav" mode="side" opened>
+        <div class="avatar-container">
+                <a class="avatar-link" routerLink="/home/edit-profile">
+                <img class="avatar mat-elevation-z8"
+                    [src]="avatarUrl" alt="Avatar"  />
+                <span class="edit-icon">&#9998;</span>
+            </a>
+        </div>
+
+        <!--<h4 class="name">User user</h4>-->
+        <p class="designation" style=" margin-top: 10px"> Inicio de sesión {{ currentDate }}</p>
+
+        <mat-divider></mat-divider>
+
+        <button *ngIf="roles && (roles.includes('ADMIN'))"  class="menu-button" routerLink="/home/upload">
+            <mat-icon>cloud_upload</mat-icon>
+            <span>Subir archivo</span>
+        </button>
+        <button *ngIf="roles && (roles.includes('ADMIN') || roles.includes('USER'))"  class="menu-button" routerLink="/home/movs">
+            <mat-icon>list</mat-icon>
+            <span>Auditoria</span>
+        </button>
+        <button *ngIf="roles && roles.includes('ADMIN')" class="menu-button" routerLink="/home/socios">
+            <mat-icon>cloud_upload</mat-icon>
+            <span>Cargar socios</span>
+        </button>
+        <mat-divider></mat-divider>
+
+        <button class="menu-button" (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Salir</span>
+        </button>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="custom-sidenav-content" >
+        <div class="content mat-elevation-z8" [style.background]="backgroundService.backgroundColor">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

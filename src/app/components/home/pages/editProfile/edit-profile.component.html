@@ -1,0 +1,44 @@
+<div class="overlay" *ngIf="loading">
+    <div class="spinner"></div>
+</div>
+<div #parentContainer class="container">
+    <div class="background">
+        <div *ngIf="!loading"  class="profile-container">
+            <div class="avatar-container">
+                <input type="file" id="avatar-upload" accept="image/*" style="display: none;" (change)="handleAvatarUpload(avatarInput)" #avatarInput />
+                <div class="avatar">
+                    <img id="avatar-img" [src]="selectedImageUrl" alt="Avatar" />
+                </div>
+                <!--<div class="change-photo">
+                    <span style=" font-size: large;" >Change Photo</span>
+                    <button class="edit-button" onclick="document.getElementById('avatar-upload').click()">&#9998;</button>
+                </div>-->
+            </div>
+
+            <div class="card-info">
+                <h2>Información personal</h2>
+            
+                <div class="form-group">
+                    <label style=" font-size: 1rem; color: #6b6868; margin-bottom: 5px;" for="name">Nombre usuario</label>
+                    <input type="text" id="name" [value]="user.name" />
+                </div>
+            
+                <div class="form-group">
+                    <label style=" font-size: 1rem; color: #6b6868;  margin-bottom: 5px;" for="email">E-mail</label>
+                    <input type="email" id="email" [value]="user.email" />
+                </div>    
+
+                <div class="form-group">
+                    <label style="font-size: 1rem; color: #6b6868;" for="roles">Roles</label>
+                    <ul id="roles">
+                        <li *ngFor="let role of user.roles">{{ role }}</li>
+                    </ul>
+                </div>
+            </div>
+            <button mat-raised-button color="primary" (click)="updateUser()" >Actualizar</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="showMessageSuccess" class="info-message-success">
+    El archivo se cargó correctamente.
+</div>

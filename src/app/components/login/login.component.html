@@ -1,0 +1,61 @@
+<div class="overlay" *ngIf="loading">
+    <div class="spinner"></div>
+</div>
+
+<div class="login">
+    <form class="custom-form" *ngIf="isLoginVisible && !isRecovery" (ngSubmit)="login()">
+        <!-- Campos de inicio de sesión -->
+        <h1>Bienvenido</h1>
+        <input type="user" [(ngModel)]="user" name="user" placeholder="usuario" required />
+        <input type="password" [(ngModel)]="password" name="password" placeholder="contraseña" required />
+        <button type="submit">Iniciar sesión</button>
+        <div class="toggle-section" style="margin-top: 20px;">
+            <p *ngIf="isLoginVisible">¿No tienes una cuenta? <a (click)="toggleForm()" style="color: blue;">Registrarse</a></p>
+            <p *ngIf="!isLoginVisible">¿Ya tienes una cuenta? <a (click)="toggleForm()" style="color: blue;">Iniciar sesión</a></p>
+            <p style="margin-top:5px;">¿Olvidaste la contraseña? <a (click)="toggleFormRecovery()" style="color: blue;">Recuperar contraseña</a></p>
+        </div>
+        
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+    </form>
+
+    <form class="custom-form" *ngIf="!isLoginVisible && !isRecovery" (ngSubmit)="register()">
+        <!-- Campos de registro -->
+        <h1>Registrarse</h1>
+        <input type="name" [(ngModel)]="register_name" name="register_name" placeholder="Nombre" required />
+        <input type="email" [(ngModel)]="register_email" name="register_email" placeholder="Email" required />
+        <input type="password" [(ngModel)]="register_password" name="register_password" placeholder="Contraseña"
+            required />
+        <input type="password" [(ngModel)]="register_confirmPassword" name="register_password"
+            placeholder="Repetir contraseña" required />
+        <button type="submit">Registrarse</button>
+        <div class="toggle-section" style="margin-top: 20px;">
+            <p *ngIf="isLoginVisible">¿No tienes una cuenta? <a (click)="toggleForm()" style="color: blue;">Registrarse</a></p>
+            <p *ngIf="!isLoginVisible">¿Ya tienes una cuenta? <a (click)="toggleForm()" style="color: blue;" >Iniciar sesión</a></p>
+        </div>
+        
+        <div *ngIf="register_errorMessage" class="error-message">
+            {{ register_errorMessage }}
+        </div>
+    </form>
+
+
+    <form class="custom-form" *ngIf="isRecovery" (ngSubmit)="recovery()">
+        <h1>Olvidé contraseña</h1>
+        <input type="email" [(ngModel)]="recovery_email" name="recovery_email" placeholder="Ingrese su email" required />
+        <button type="submit">Recuperar contraseña</button>
+        <div class="toggle-section" style="margin-top: 20px;">
+            <p>¿Ya tienes una cuenta? <a (click)="toggleForm()" style="color: blue;">Iniciar
+                    sesión</a></p>
+        </div>
+    
+        <div *ngIf="recovery_errorMessage" class="error-message">
+            {{ recovery_errorMessage }}
+        </div>
+        <div *ngIf="recovery_successMessage" class="success-message">
+            {{ recovery_successMessage }}
+        </div>
+    </form>
+    
+</div>

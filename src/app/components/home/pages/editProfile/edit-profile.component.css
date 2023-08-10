@@ -1,0 +1,122 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-left: 250px;
+    background-color: #E8EAF6;
+    width: 100%;
+}
+
+.background {
+    background: #f4f6fa;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+}
+
+.profile-container {
+    background: #eeeff4;
+    color: #303f9f;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0 auto;
+    /* Centrar horizontalmente */
+    max-width: 800px;
+    /* Ajustar el ancho máximo según tus necesidades */
+}
+
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.change-photo {
+    display: flex;
+    align-items: center;
+}
+
+.change-photo span {
+    margin-right: 10px;
+}
+
+.edit-button {
+    background-color: #303f9f;
+    color: #eeeff4;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.personal-info {
+    margin-top: 20px;
+}
+
+.personal-info h2 {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.form-group {
+    margin: 30px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    color: #303f9f;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #303f9f;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #303f9f;
+}
+
+input:focus {
+    outline: none;
+    border-color: #303f9f;
+}
+
+.content {
+    background-color: #C5CAE9;
+}
+
+ul {
+ font-size: small;
+}
+.info-message-success {
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #d3f1c2;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeOut 3s ease-in-out;
+    font-size: medium;
+    font-style: oblique;
+    color: #6b6868;
+}
