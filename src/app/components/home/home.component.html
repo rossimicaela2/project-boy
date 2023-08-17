@@ -1,10 +1,13 @@
-<mat-toolbar color="primary">Sistema ingreso de archivos</mat-toolbar>
+<mat-toolbar color="primary">
+    <img id="logo-img" src="https://www.cooptandil.com.ar/img/logo.png" alt="logo" style="width:150px"/>
+    <span>Conciliación de Stock</span> 
+</mat-toolbar>
 
 <mat-sidenav-container>
     <mat-sidenav class="mat-elevation-z8 custom-sidenav" mode="side" opened>
         <div class="avatar-container">
                 <a class="avatar-link" routerLink="/home/edit-profile">
-                <img class="avatar mat-elevation-z8"
+                <img id="showAvatar" class="avatar mat-elevation-z8"
                     [src]="avatarUrl" alt="Avatar"  />
                 <span class="edit-icon">&#9998;</span>
             </a>
@@ -36,7 +39,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="custom-sidenav-content" >
-        <div class="content mat-elevation-z8" [style.background]="backgroundService.backgroundColor">
+        <div class="content mat-elevation-z8">
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>

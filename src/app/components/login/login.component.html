@@ -2,6 +2,11 @@
     <div class="spinner"></div>
 </div>
 
+<div style="display: flex; align-items: center; justify-content: center;">
+    <img id="logo-img" src="https://www.cooptandil.com.ar/img/logo.png" alt="logo"/>
+    <span></span>
+</div>
+
 <div class="login">
     <form class="custom-form" *ngIf="isLoginVisible && !isRecovery" (ngSubmit)="login()">
         <!-- Campos de inicio de sesión -->
@@ -10,9 +15,9 @@
         <input type="password" [(ngModel)]="password" name="password" placeholder="contraseña" required />
         <button type="submit">Iniciar sesión</button>
         <div class="toggle-section" style="margin-top: 20px;">
-            <p *ngIf="isLoginVisible">¿No tienes una cuenta? <a (click)="toggleForm()" style="color: blue;">Registrarse</a></p>
-            <p *ngIf="!isLoginVisible">¿Ya tienes una cuenta? <a (click)="toggleForm()" style="color: blue;">Iniciar sesión</a></p>
-            <p style="margin-top:5px;">¿Olvidaste la contraseña? <a (click)="toggleFormRecovery()" style="color: blue;">Recuperar contraseña</a></p>
+            <p *ngIf="isLoginVisible">¿No tienes una cuenta? <a (click)="toggleForm()" style="color: #10642e; cursor: pointer;">Registrarse</a></p>
+            <p *ngIf="!isLoginVisible">¿Ya tienes una cuenta? <a (click)="toggleForm()" style="color: #10642e">Iniciar sesión</a></p>
+            <p style="margin-top:5px;">¿Olvidaste la contraseña? <a (click)="toggleFormRecovery()" style="color: #10642e; cursor: pointer;">Recuperar contraseña</a></p>
         </div>
         
         <div *ngIf="errorMessage" class="error-message">

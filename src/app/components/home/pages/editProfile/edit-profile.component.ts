@@ -14,6 +14,7 @@ export class EditProfileComponent implements OnInit {
     user: any;
     selectedImageUrl: string | ArrayBuffer | null = null;
     avatar: File | null = null;
+    avatarCode64: string = "";
     loading: boolean = false;
     showMessageSuccess = false;
     messageTimeout: any;
@@ -60,6 +61,9 @@ export class EditProfileComponent implements OnInit {
                     avatarImg.setAttribute('src', e.target.result as string);
                     this.selectedImageUrl = e.target.result;
                     this.avatar = file;
+                    this.avatarCode64 = e.target.result as string;
+                    console.log(this.avatarCode64);
+
                 }
             };
 
@@ -73,6 +77,12 @@ export class EditProfileComponent implements OnInit {
         if (this.avatar) {
             this.userService.updateUser(this.user.name, this.user.email, this.avatar).subscribe(isValid => {
                 this.loading = false;
+                console.log(this.avatarCode64);
+                const avatarImg = document.getElementById('showAvatar');
+                console.log(avatarImg);
+                if (avatarImg)
+                    avatarImg.setAttribute('src', this.avatarCode64);
+
                 if (isValid) {
                     this.showInfoMessageSuccess();
                     this.router.navigateByUrl("/home");

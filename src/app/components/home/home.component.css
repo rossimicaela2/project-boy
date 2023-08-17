@@ -5,8 +5,8 @@
 }
 
 .mat-toolbar {
-    background: #303F9F;
-    color: #eeeff4;
+    background: rgb(150 175 58 / 73%);
+    color: #10642e;;
 }
 
 .mat-sidenav {
@@ -24,8 +24,8 @@
     margin: 16px;
     width: 220px;
     border-right: none;
-    background: #C5CAE9;
-    color: #ffffff;
+    background: rgb(150 175 58 / 73%);
+    color: #10642e;;
     border-radius: 10px;
     padding: 16px;
     text-align: center;
@@ -36,9 +36,9 @@
     display: flex;
     align-items: center;
     font-size: 1rem;
-    background-color: #C5CAE9;
+    background-color:rgb(150 175 58 / 73%);
     border: none;
-    color: #303F9F;
+    color: #10642e;;
     margin-left: 25px;
     margin-right: 25px;
     margin-top: 16px;
@@ -46,9 +46,9 @@
 }
 
 .menu-button:hover {
-    background-color: #C5CAE9;
+    background-color:rgb(150 175 58 / 73%);
     font-size: 1.2rem;
-    color: #243398;;
+    color: #10642e;;;
 }
 
 .menu-button mat-icon {
