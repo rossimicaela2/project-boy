@@ -1,3 +1,7 @@
+<div class="overlay" *ngIf="loading">
+    <div class="spinner"></div>
+</div>
+
 <div style="margin: 20px;">
     <h2 class="title">Subir archivos</h2>
     <span style="margin-top: 10px;"></span>
@@ -39,26 +43,9 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="cliente">
-            <th mat-header-cell *matHeaderCellDef style="background-color: #E8EAF6;">Cliente</th>
-            <td mat-cell *matCellDef="let element">
-                <mat-form-field>
-                    <input #inputField type="text" placeholder="" aria-label="Number" matInput [(ngModel)]="element.cliente" 
-                        [matAutocomplete]="auto" (click)="$event.stopPropagation();"
-                        style="background: white; font-size: 12px;" (focus)="onInputBlur(); ">
-                    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
-                        <mat-option class="auto-option" *ngFor="let option of filteredOptions | async" [value]="option"
-                            style="font-size: 10px;">
-                            {{option}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </td>
-        </ng-container>
-
         <!-- Resto de las columnas -->
         <ng-container *ngFor="let column of columnsToDisplay">
-            <ng-container *ngIf="column !== 'cliente'"  [matColumnDef]="column">
+            <ng-container [matColumnDef]="column">
                 <th mat-header-cell *matHeaderCellDef style="background-color: #E8EAF6;"> {{column}} </th>
                 <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
             </ng-container>
@@ -83,7 +70,7 @@
                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                     <div>
                         <div *ngFor="let prop of getObjectKeys(element)">
-                            <ng-container *ngIf="prop !== 'cliente'">
+                            <ng-container>
                                  <b>{{ prop }}:</b> {{ element[prop] }}
                             </ng-container>
                         </div>

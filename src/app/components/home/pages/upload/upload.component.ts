@@ -34,6 +34,7 @@ import { BackgroundService } from "../../../service/BackgroundService";
     imports: [MatTableModule, NgFor, MatButtonModule, NgIf, MatIconModule, MatCheckboxModule, MatInputModule,
         MatAutocompleteModule, ReactiveFormsModule, FormsModule, AsyncPipe],
 })
+
 export class UploadComponent implements OnInit {
     dataSource: DataRow[] = [];
     columnsToDisplay: string[] = [];
@@ -53,6 +54,7 @@ export class UploadComponent implements OnInit {
     showSuccessMessage = false;
     showErrorMessage = false;
     messageTimeout: any;
+    loading: boolean = false;
 
     constructor(public router: Router, private http: HttpClient, public userService: UsersService, private backgroundService: BackgroundService) {
         this.backgroundService.backgroundColor = '#FFFFFF';
@@ -60,34 +62,7 @@ export class UploadComponent implements OnInit {
 
     ngOnInit() {
         this.setColumnsToDisplay();
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-            startWith(''),
-            debounceTime(300),
-            distinctUntilChanged(),
-            switchMap(value => this.searchClients(value || ''))
-        );
     }
-
-    private _filter(value: string): Observable<string[]> {
-        const filterValue = value.toLowerCase();
-        return this.searchClients(filterValue);
-    }
-
-    searchClients(value: string): Observable<string[]> {
-        const filterValue = value.toLowerCase();
-        return this.userService.searchClients(filterValue).pipe(
-            map(clients => clients.map(client => client.nombre as string))
-        );
-    }
-
-    onInputBlur(): void {
-        this.closeAutocomplete();
-    }
-    closeAutocomplete() {
-        this.autocompleteTriggers.forEach((trigger) => trigger.closePanel());
-    }
-    /* FIN AUTOCOMPLETE */
-
 
     /* CARGA EXCEL */
     onFileChange(event: any) {
@@ -95,6 +70,7 @@ export class UploadComponent implements OnInit {
     }
 
     uploadFile() {
+        this.loading = true;
         if (this.file) {
             const formData: FormData = new FormData();
             formData.append('file', this.file, this.file.name);
@@ -102,16 +78,17 @@ export class UploadComponent implements OnInit {
             this.userService.uploadExcel(this.file, "RESUMEN").subscribe((response: any) => {
                 this.dataSource = response.map((row: DataRow) => {
                     return {
-                        cliente: '', // Agrega la propiedad "cliente" con valor inicial en blanco
                         ...row
                     };
                 });
                 console.log(response);
                 this.setColumnsToDisplay();
+                this.loading = false;
             },
                 (error: any) => {
                     this.dataSource = [];
                     console.error('Error during upload:', error);
+                    this.loading = false;
                 });
         }
     }
@@ -121,8 +98,8 @@ export class UploadComponent implements OnInit {
     setColumnsToDisplay() {
         if (this.dataSource.length > 0) {
             const firstRow = this.dataSource[0];
-            this.columnsToDisplay = Object.keys(firstRow).slice(0, 7).filter(column => column !== 'cliente');
-            this.columnsToDisplayWithExpand = ['select', 'cliente', ...this.columnsToDisplay, 'expand'];
+            this.columnsToDisplay = Object.keys(firstRow).slice(0, 7);
+            this.columnsToDisplayWithExpand = ['select', ...this.columnsToDisplay, 'expand'];
             this.rowColumns = [...this.columnsToDisplayWithExpand];
         }
     }
@@ -135,8 +112,6 @@ export class UploadComponent implements OnInit {
     /* LOGICA CHECKBOX */
 
     toggleAllRows() {
-        this.closeAutocomplete();
-
         if (this.isAllSelected()) {
             this.selection.clear();
             this.selectedItems = [];
@@ -147,13 +122,10 @@ export class UploadComponent implements OnInit {
     }
 
     updateSelectedItems() {
-        const clienteValue = this.myControl.value;
-        this.closeAutocomplete();
         this.selectedItems = this.selection.selected.map((item) => item);
         console.log(this.selectedItems);
         const selectedItemsWithClients = this.selectedItems.map(item => {
             return {
-                cliente: clienteValue,
                 ...item
             };
         })
@@ -178,7 +150,6 @@ export class UploadComponent implements OnInit {
     /* ENVIO DEL JSON */
 
     sendSelection() {
-        this.closeAutocomplete();
         this.performSelectionSend();
     }
 
@@ -194,49 +165,31 @@ export class UploadComponent implements OnInit {
         clearTimeout(this.messageTimeout);
     }
 
-    isClientInputComplete() {
-        const selectedItemsWithClients = this.selectedItems.map(item => {
-            return {
-                cliente: this.myControl.value,
-                ...item
-            };
-        })
-        console.log(selectedItemsWithClients);
-        for (const row of selectedItemsWithClients) {
-            console.log(row["cliente"]);
-            if (!row["cliente"] || row["cliente"].trim() === '') {
-                return false; // Si el campo "Cliente" no está completo en alguna fila, retorna false
-            }
-        }
-        return true; // Si el campo "Cliente" está completo en todas las filas, retorna true
-    }
-
     performSelectionSend() {
         const payload = {
             selectedItems: this.selectedItems.map(item => {
                 return {
-                    cliente: this.myControl.value,
                     ...item
                 };
             })
         };
 
         if (this.selectedItems.length > 0) {
-            if (this.isClientInputComplete()) {
+            this.loading = true;
                 this.userService.sendSelectedItemsToBackend(payload).subscribe(
                     (response: any) => {
                         this.selection.clear();
                         this.selectedItems = [];
                         this.myControl.setValue('');
+                        this.loading = false;
                         this.enableSuccessMessage();
                     },
                     (error: any) => {
+                        this.loading = false;
                         this.enableErrorMessage();
                     }
                 );
-            } else {
-                this.showInfoMessage();
-            }
+           
         }
     }
 
