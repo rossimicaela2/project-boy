@@ -96,7 +96,7 @@ input {
 
 input:focus {
     outline: none;
-    border-color: #303f9f;
+    border-color: rgb(150 175 58 / 73%);
 }
 
 .content {

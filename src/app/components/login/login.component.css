@@ -6,9 +6,16 @@
     padding: 1rem;
     border: none;
     box-shadow: inset -5px -5px 15px rgba(255, 255, 255, 0.8), inset 5px 5px 10px rgba(0, 0, 0, 0.1);
-    border: 0 none;
+    border: 1px none;
     background: #ebf5fc;
 }
+
+.custom-form input:focus {
+    border-color: #10642e;
+    outline: none;
+    box-shadow: 0 0 5px rgba(16, 100, 46, 0.5);
+}
+
 
 .custom-form button {
     text-transform: uppercase;
@@ -30,6 +37,7 @@
     color: #9a9898cc;
     /* Cambia el color a tu preferencia */
 }
+
 
 .error-message {
     color: red;
