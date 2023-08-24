@@ -10,7 +10,7 @@ import { AuthService } from "./AuthService";
     providedIn: "root",
 })
 export class UsersService {
-    private apiUrl = 'http://localhost:8080'; // Reemplaza con la URL de tu API
+    private apiUrl = 'http://13.59.171.168:8080'; // Reemplaza con la URL de tu API
 
     constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -22,6 +22,7 @@ export class UsersService {
             map((response: any) => {
                 this.authService.setAuthToken(response.token); // Guarda el token en el almacenamiento local
                 this.authService.setUserAvatar(response.avatar); // Guarda el token en el almacenamiento local
+                this.authService.setUserRole(response.roles); // Guarda el token en el almacenamiento local
                 return true;
             }),
             catchError((error: any) => {
@@ -44,17 +45,6 @@ export class UsersService {
 
     recovery(email: object): Observable<boolean> {
         return this.http.post<string>(this.apiUrl + '/recovery', email).pipe(
-            map((response: any) => {
-                return true;
-            }),
-            catchError((error: any) => {
-                return of(false);
-            })
-        );
-    }
-
-    validateToken(token: object): Observable<boolean> {
-        return this.http.post<string>(this.apiUrl + '/validate', token).pipe(
             map((response: any) => {
                 return true;
             }),

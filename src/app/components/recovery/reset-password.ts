@@ -25,24 +25,7 @@ export class ResetPasswordComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.queryParams.subscribe(params => {
-            this.loading = true;
             this.token = params['token'];
-            this.verifyTokenAndResetPassword();
-        });
-    }
-
-    verifyTokenAndResetPassword() {
-        const requestBody = {
-            resetToken: this.token
-        };
-
-        this.userService.validateToken(requestBody).subscribe(isValid => {
-            this.loading = false;
-            if (!isValid) {
-                this.password = "";
-                this.resetPasswordSuccess = "";
-                this.resetPasswordError = 'Hubo un problema con su autenticación.';
-            }
         });
     }
 

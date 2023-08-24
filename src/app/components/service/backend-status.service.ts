@@ -8,7 +8,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 })
 export class BackendStatusService {
 
-  private backendUrl = 'http://localhost:8080/api/status'; // URL del endpoint de estado del backend
+  private backendUrl = 'http://13.59.171.168:8080/api/status'; // URL del endpoint de estado del backend
   private checkInterval = 5000; // Intervalo de verificación en milisegundos
 
   constructor(private http: HttpClient) { }
