@@ -5,12 +5,13 @@ import UserCredentials from "../utils/user-credentials";
 import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from "./AuthService";
+import { API_BASE_URL } from "src/app/shared/constants";
 
 @Injectable({
     providedIn: "root",
 })
 export class UsersService {
-    private apiUrl = 'http://localhost:8080'; // Reemplaza con la URL de tu API
+    private apiUrl = API_BASE_URL; 
 
     constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -79,27 +80,6 @@ export class UsersService {
             };
 
             return this.http.post<any>(this.apiUrl + '/upload-excel', formData, { headers });
-        } else {
-            // Maneja el caso en el que no se encuentre el token en el localStorage
-            console.error('Error during uploadExcel');
-            return of('Token not found');
-        }
-    }
-
-    uploadSocios(file: File, sheetname: string = ''): Observable<any> {
-        const formData: FormData = new FormData();
-        const token = this.authService.getAuthToken();
-
-        formData.append('file', file, file.name);
-        if (sheetname != '') {
-            formData.append('sheetname', sheetname); // 'sheetName' es el nombre de la hoja que deseas recuperar en el backend
-        }
-        if (token) {
-            const headers = {
-                'Authorization': 'Bearer ' + token
-            };
-
-            return this.http.post<any>(this.apiUrl + '/upload-socios', formData, { headers });
         } else {
             // Maneja el caso en el que no se encuentre el token en el localStorage
             console.error('Error during uploadExcel');

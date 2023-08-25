@@ -1,4 +1,8 @@
-<div style="margin: 20px; width: 990px">
+<div class="overlay" *ngIf="loading">
+    <div class="spinner"></div>
+</div>
+
+<div style="margin: 20px; width: 990px"  *ngIf="!loading">
     <h2 class="title">Listado de auditorias generadas</h2>
     <span style="margin-top: 10px;"></span>
     <div>

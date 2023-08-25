@@ -13,7 +13,7 @@ import { BackgroundService } from "../../../service/BackgroundService";
     styleUrls: ["./movimientos.component.css"],
 })
 export class MovimientosComponent implements AfterViewInit {
-    displayedColumns: string[] = ['nombre', 'fecha', 'url'];
+    displayedColumns: string[] = ['nombre', 'fecha', 'usuario', 'url'];
     dataSource: MatTableDataSource<DataRow>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -21,6 +21,8 @@ export class MovimientosComponent implements AfterViewInit {
 
     showPdfPopup: boolean = false;
     selectedPdfBlob: Blob | null = null;
+
+    loading: boolean = false;
 
     constructor(private http: HttpClient, public userService: UsersService, public router: Router, private backgroundService: BackgroundService) {
         this.backgroundService.backgroundColor = '#FFFFFF';
@@ -43,17 +45,21 @@ export class MovimientosComponent implements AfterViewInit {
     }
 
     searchDocuments() {
+        this.loading = true;
         this.userService.listado().subscribe(
             (response: any) => {
+                this.loading = false;
                 const dataRows: DataRow[] = response.map((item: any) => ({
-                    nombre: item.audit_name,
-                    fecha: item.audit_date
+                    nombre: item.auditName,
+                    fecha: item.auditDate,
+                    usuario: item.userName,
                 }));
                 this.dataSource.data = dataRows;
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
             },
             (error: any) => {
+                this.loading = false;
                 this.dataSource.data = [];
                 console.error("Error during upload:", error);
             }
@@ -114,5 +120,6 @@ export class MovimientosComponent implements AfterViewInit {
 interface DataRow {
     nombre: string;
     fecha: string;
+    usuario: string;
     url: string;
 }

@@ -11,9 +11,9 @@
 .background {
     background: #f4f6fa;
     border-radius: 10px;
-    max-width: 600px;
     width: 100%;
     padding: 20px;
+    margin: 0 auto;
 }
 .custom-button {
     text-transform: uppercase;
@@ -36,9 +36,11 @@
     padding: 20px;
     border-radius: 10px;
     margin: 0 auto;
-    /* Centrar horizontalmente */
-    max-width: 800px;
-    /* Ajustar el ancho máximo según tus necesidades */
+    /* Centrar horizontalmente y ajustar el ancho máximo */
+    max-width: 900px;
+    /* Ajusta el ancho máximo según tus necesidades */
+    text-align: center;
+    /* Centrar el contenido */
 }
 
 .avatar-container {
@@ -114,9 +116,6 @@ input:focus {
     border-color: rgb(150 175 58 / 73%);
 }
 
-.content {
-    background-color: #C5CAE9;
-}
 
 ul {
  font-size: small;

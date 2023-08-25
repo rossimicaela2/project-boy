@@ -29,7 +29,6 @@ export class EditProfileComponent implements OnInit {
         this.userService.getPersonalInformation().subscribe(
             (response) => {
                 this.loading = false;
-                console.log(response);
                 this.user = response;
                 // Establece el atributo `src` de la imagen con el `base64` codificado
                 this.selectedImageUrl = "data:image/jpeg;base64," + this.user.avatar;

@@ -21,7 +21,6 @@ import { LoginComponent } from "./components/login/login.component";
 import { ResetPasswordComponent } from "./components/recovery/reset-password";
 import { HomeComponent } from "./components/home/home.component";
 import { MovimientosComponent } from "./components/home/pages/movimientos/movimientos.component";
-import { LoadSociosComponent } from './components/home/pages/load-socios/load-socios.component';
 import { EditProfileComponent } from "./components/home/pages/editProfile/edit-profile.component";
 import { FileSaverModule } from 'ngx-filesaver';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -40,7 +39,6 @@ import { SharedService } from "./components/service/SharedService";
     ResetPasswordComponent,
     HomeComponent,
     MovimientosComponent,
-    LoadSociosComponent,
     EditProfileComponent],
   imports: [
     HttpClientModule,

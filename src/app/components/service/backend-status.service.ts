@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, interval, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { API_BASE_URL, API_TIME_STATUS } from 'src/app/shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendStatusService {
 
-  private backendUrl = 'http://localhost:8080/api/status'; // URL del endpoint de estado del backend
-  private checkInterval = 5000; // Intervalo de verificación en milisegundos
+  private backendUrl = API_BASE_URL + '/api/status'; 
+  private checkInterval = API_TIME_STATUS; 
 
   constructor(private http: HttpClient) { }
 

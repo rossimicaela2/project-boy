@@ -4,20 +4,10 @@ import { Router } from "@angular/router";
 import { AuthService } from "../service/AuthService";
 import { BackendStatusService } from '../service/backend-status.service'
 import { DatePipe } from '@angular/common';
-import { BackgroundService } from '../service/BackgroundService'
-import { SharedService } from "../service/SharedService";
-import { Observable } from 'rxjs';
+import { BackgroundService } from '../service/BackgroundService';
 
 @Component({
     selector: "app-home",
-    template: `
-    <mat-sidenav-content class="custom-sidenav-content">
-      <div class="content mat-elevation-z8" [style.background]="backgroundService.backgroundColor">
-        <h2>Bienvenid@!\n          sistema de ingreso de archivos</h2>
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  `,
     templateUrl: "./home.component.html",
     styleUrls: ["./home.component.css"]
 })
@@ -31,7 +21,6 @@ export class HomeComponent implements OnInit {
         const today = new Date();
         const datePipe = new DatePipe('en-US');
         this.currentDate = datePipe.transform(today, 'dd/MM/yyyy');
-        this.backgroundService.backgroundColor = 'linear-gradient(to top, #303F9F, #C5CAE9, #eeeff4, #ffffff), linear-gradient(to bottom, #ffffff, #eeeff4, #C5CAE9, #303F9F)';
      }
      
     ngOnInit() {
