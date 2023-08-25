@@ -1,5 +1,5 @@
 .mat-divider {
-    margin-top: 16px;
+    margin-top: 20px;
     margin-bottom: 16px;
     background-color: rgba(148, 141, 141, 0.71);
 }
@@ -24,7 +24,7 @@
     margin: 16px;
     width: 220px;
     border-right: none;
-    background: rgb(150 175 58 / 73%);
+    background: #ecf0f3;
     color: #10642e;;
     border-radius: 10px;
     padding: 16px;
@@ -37,19 +37,19 @@
     display: flex;
     align-items: center;
     font-size: 1rem;
-    background-color:rgb(150 175 58 / 73%);
+    background-color:rgb(150 175 58 / 45%);
     border: none;
     color: #09441e;;
-    margin-left: 5px;
-    margin-right: 25px;
+    margin-right: 16px;
     margin-top: 16px;
     margin-bottom: 16px;
+    border-radius: 1.5rem;
 }
 
 .menu-button:hover {
     background-color:rgb(150 175 58 / 73%);
-    font-size: 1.2rem;
-    color: #10642e;;;
+    font-size: 1.1rem;
+    color: #10642e;
 }
 
 .menu-button mat-icon {
@@ -63,8 +63,8 @@
 
 .avatar {
     margin-top: 16px;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
 }
 

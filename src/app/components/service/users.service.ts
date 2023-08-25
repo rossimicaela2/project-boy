@@ -10,7 +10,7 @@ import { AuthService } from "./AuthService";
     providedIn: "root",
 })
 export class UsersService {
-    private apiUrl = 'http://13.59.171.168:8080'; // Reemplaza con la URL de tu API
+    private apiUrl = 'http://localhost:8080'; // Reemplaza con la URL de tu API
 
     constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -154,19 +154,35 @@ export class UsersService {
     }
 
     sendSelectedItemsToBackend(selection: object): Observable<any> {
-        console.log("ENVIO!!!");
-        console.log(''+ selection);
         const token = this.authService.getAuthToken();
         if (token) {
             const headers = {
-                'Authorization': 'Bearer ' + token
+                'Authorization': token
             };
-
            return this.http.post(this.apiUrl + '/selection', selection, { headers })
         } else {
             return of('Error during uploadExcel');
         }
     }
+
+    descarga(nameAuditoria: string): Observable<any> {
+        const formData: FormData = new FormData();
+        formData.append('nameAuditoria', nameAuditoria);
+        const token = this.authService.getAuthToken();
+        if (token) {
+            const headers = {
+                'Authorization': token
+            };
+
+            // Especifica el responseType como 'arraybuffer' para recibir el contenido binario
+            return this.http.post(this.apiUrl + '/download', formData, { headers, responseType: 'arraybuffer' });
+        } else {
+            // Maneja el caso en el que no se encuentre el token en el localStorage
+            console.error('Error during uploadExcel');
+            return of('Token not found');
+        }
+    }
+
 
     searchClients(query: string): Observable<Client[]> {
         const url = '/clients?query=' + query;

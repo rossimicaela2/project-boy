@@ -15,10 +15,24 @@
     width: 100%;
     padding: 20px;
 }
+.custom-button {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: none;
+    font-size: 0.875rem;
+    color: #10642e;
+    font-weight: bold;
+    background-color: rgb(150 175 58 / 73%);
+    width: 50%;
+    padding: 0.875rem 1rem;
+    border-radius: 1.5rem;
+    box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+    cursor: pointer;
+}
 
 .profile-container {
-    background: #eeeff4;
-    color: #303f9f;
+    background: rgb(150 175 58 / 52%);
+    color: #6b6868;
     padding: 20px;
     border-radius: 10px;
     margin: 0 auto;
@@ -58,12 +72,13 @@
 }
 
 .edit-button {
-    background-color: #303f9f;
-    color: #eeeff4;
+    background-color: rgb(150 175 58 / 73%);
+    color: #10642e;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
 }
 
 .personal-info {

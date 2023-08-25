@@ -46,9 +46,8 @@ export class MovimientosComponent implements AfterViewInit {
         this.userService.listado().subscribe(
             (response: any) => {
                 const dataRows: DataRow[] = response.map((item: any) => ({
-                    nombre: item.nombre,
-                    fecha: item.fecha,
-                    url: item.url
+                    nombre: item.audit_name,
+                    fecha: item.audit_date
                 }));
                 this.dataSource.data = dataRows;
                 this.dataSource.paginator = this.paginator;
@@ -64,25 +63,31 @@ export class MovimientosComponent implements AfterViewInit {
     downloadFile(row: DataRow, event: Event) {
         event.preventDefault(); // Prevenir comportamiento predeterminado del enlace
 
-        const fileUrl = row.nombre;
-        this.userService.downloadFile(fileUrl).subscribe(
-            (data: any) => {
-                const blob = new Blob([data], { type: 'application/octet-stream' });
+        const nameAuditoria = row.nombre; // Nombre de la auditoria o identificador único
+
+        this.userService.descarga(nameAuditoria).subscribe(
+            (response: ArrayBuffer) => {
+                // Crear un Blob a partir del ArrayBuffer
+                const blob = new Blob([response], { type: 'application/pdf' });
+
+                // Crear una URL del Blob
                 const url = window.URL.createObjectURL(blob);
 
-                var link = document.createElement('a');
+                // Crear un elemento <a> para la descarga
+                const link = document.createElement('a');
                 link.href = url;
-                link.download = row.nombre;
+                link.download = 'Auditoria.pdf'; // Nombre del archivo de descarga
                 link.style.display = 'none';
 
+                // Agregar el elemento <a> al DOM y hacer clic en él
                 document.body.appendChild(link);
                 link.click();
 
+                // Eliminar el elemento <a> y liberar la URL del Blob
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(url);
             },
             (error: any) => {
-                this.dataSource.data = [];
                 console.error('Error during download:', error);
             }
         );
